@@ -1,0 +1,54 @@
+{
+  "name": "cdk-aws-opensearch-api",
+  "version": "0.0.0-development",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "rm -rf lib && tsc --emitDeclarationOnly --project tsconfig.build.json && esbuild $(find src -name '*.ts' ! -name '*.test.ts' ! -path '*/__tests__/*') --outdir=lib --platform=node --target=node14 --format=cjs && cp -r src/keys lib/keys",
+    "format": "prettier --write src/**/*.ts integration-tests/**/*.ts",
+    "lint": "eslint src/**/*.ts && tsc --noEmit",
+    "semantic-release": "semantic-release",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "aws-cdk-lib": "^2.0.0",
+    "constructs": "^10.0.0",
+    "esbuild": "^0.14.2",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.15.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^10.1.3",
+    "markdown-toc": "^1.2.0",
+    "prettier": "^2.5.1",
+    "semantic-release": "^18.0.1",
+    "typescript": "^4.0.0"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.0.0",
+    "constructs": "^10.0.0"
+  },
+  "sideEffects": false,
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "tsc --esModuleInterop --resolveJsonModule --noEmit ./setupTests.ts",
+      "prettier --write"
+    ],
+    "README.md": "markdown-toc -i --bullets=- --maxdepth=3"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jagregory/cdk-aws-opensearch-api.git"
+  }
+}

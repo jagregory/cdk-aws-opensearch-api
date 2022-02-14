@@ -1,0 +1,14 @@
+{
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    "@semantic-release/npm",
+    ["@semantic-release/github", {
+      "addReleases": "top"
+    }],
+    ["@semantic-release/git", {
+      "assets": ["CHANGELOG.md"],
+    }]
+  ]
+}
