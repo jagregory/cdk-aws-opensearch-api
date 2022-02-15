@@ -5,30 +5,34 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
+    "lambdas",
     "lib"
   ],
   "scripts": {
-    "build": "rm -rf lib && tsc --emitDeclarationOnly --project tsconfig.build.json && esbuild $(find src -name '*.ts' ! -name '*.test.ts' ! -path '*/__tests__/*') --outdir=lib --platform=node --target=node14 --format=cjs && cp -r src/keys lib/keys",
+    "build": "rm -rf lib && tsc --emitDeclarationOnly --project tsconfig.json && esbuild $(find src -name '*.ts' ! -name '*.test.ts' ! -path '*/__tests__/*') --outdir=lib --platform=node --target=node14 --format=cjs",
     "format": "prettier --write src/**/*.ts integration-tests/**/*.ts",
     "lint": "eslint src/**/*.ts && tsc --noEmit",
     "semantic-release": "semantic-release",
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@commitlint/cli": "^15.0.0",
-    "@commitlint/config-conventional": "^15.0.0",
+    "@commitlint/cli": "^16.0.0",
+    "@commitlint/config-conventional": "^16.0.0",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
+    "@types/node": "^17.0.18",
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
     "aws-cdk-lib": "^2.0.0",
     "constructs": "^10.0.0",
-    "esbuild": "^0.14.2",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.15.0",
+    "esbuild": "^0.14.21",
+    "eslint": "^8.9.0",
+    "eslint-config-prettier": "^8.3.0",
     "husky": "^7.0.4",
-    "lint-staged": "^10.1.3",
+    "lint-staged": "^12.3.4",
     "markdown-toc": "^1.2.0",
     "prettier": "^2.5.1",
-    "semantic-release": "^18.0.1",
+    "semantic-release": "^19.0.2",
     "typescript": "^4.0.0"
   },
   "peerDependencies": {
@@ -39,7 +43,7 @@
   "lint-staged": {
     "*.ts": [
       "eslint --fix",
-      "tsc --esModuleInterop --resolveJsonModule --noEmit ./setupTests.ts",
+      "tsc --esModuleInterop --resolveJsonModule --noEmit",
       "prettier --write"
     ],
     "README.md": "markdown-toc -i --bullets=- --maxdepth=3"
