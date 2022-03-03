@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/jagregory/cdk-aws-opensearch-api/compare/v1.0.0...v1.0.1) (2022-03-03)
+
+
+### Bug Fixes
+
+* add extra logs for responses ([17b4709](https://github.com/jagregory/cdk-aws-opensearch-api/commit/17b4709839bd63f8dde33942e9b958e5f289a8d9))
+
 # 1.0.0 (2022-02-15)
 
 
