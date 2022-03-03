@@ -32,6 +32,13 @@ const osRequest = (url, method, credentials, data) => {
         });
 
         res.on("end", () => {
+          console.info("Request complete", {
+            body: data,
+            method,
+            statusCode: res.statusCode,
+            url,
+          });
+
           if (res.statusCode >= 400) {
             reject(
               new Error(`Received unexpected status code ${res.statusCode}`)
