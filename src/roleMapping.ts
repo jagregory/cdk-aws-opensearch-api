@@ -28,11 +28,26 @@ export class RoleMapping extends Construct {
       resourceType: "rolesmapping",
       resourceBody: Lazy.uncachedString({
         produce(ctx: IResolveContext): string | undefined {
-          if ("resolve" in props.roleMappingDefinition) {
-            return JSON.stringify(props.roleMappingDefinition.resolve(ctx));
+          const resolved =
+            "resolve" in props.roleMappingDefinition
+              ? (props.roleMappingDefinition.resolve(
+                  ctx
+                ) as RoleMappingDefinition)
+              : props.roleMappingDefinition;
+
+          if (resolved.backend_roles) {
+            resolved.backend_roles = resolved.backend_roles.filter(
+              (x): x is string => !!x
+            );
+          }
+          if (resolved.users) {
+            resolved.users = resolved.users.filter((x): x is string => !!x);
+          }
+          if (resolved.hosts) {
+            resolved.hosts = resolved.hosts.filter((x): x is string => !!x);
           }
 
-          return JSON.stringify(props.roleMappingDefinition);
+          return JSON.stringify(resolved);
         },
       }),
     });
