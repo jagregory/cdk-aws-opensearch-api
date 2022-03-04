@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/jagregory/cdk-aws-opensearch-api/compare/v1.0.2...v1.0.3) (2022-03-04)
+
+
+### Bug Fixes
+
+* filter nulls from role mapping definition ([ca170ef](https://github.com/jagregory/cdk-aws-opensearch-api/commit/ca170ef00646dda7570bf1aad842a77f07667339))
+
 ## [1.0.2](https://github.com/jagregory/cdk-aws-opensearch-api/compare/v1.0.1...v1.0.2) (2022-03-04)
 
 
