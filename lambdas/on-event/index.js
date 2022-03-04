@@ -13,7 +13,9 @@ async function getOpenSearchCredentials(secretId) {
   return JSON.parse(secret["SecretString"]);
 }
 
-const osRequest = (url, method, credentials, data) => {
+const osRequest = (url, method, credentials, reqBody) => {
+  const reqId = new Date().getTime();
+
   return new Promise((resolve, reject) => {
     const req = https.request(
       url,
@@ -33,6 +35,7 @@ const osRequest = (url, method, credentials, data) => {
 
         res.on("end", () => {
           console.info("Request complete", {
+            reqId,
             body: data,
             method,
             statusCode: res.statusCode,
@@ -55,11 +58,16 @@ const osRequest = (url, method, credentials, data) => {
 
     req.on("error", (err) => reject(err));
 
-    if (data) {
-      req.write(data);
+    if (reqBody) {
+      req.write(reqBody);
     }
 
-    console.log(`${method} ${url}`);
+    console.info("Request started", {
+      reqId,
+      body: reqBody,
+      method,
+      url,
+    });
     req.end();
   });
 };
@@ -79,8 +87,6 @@ module.exports.handler = async (event) => {
   if (event["RequestType"] === "Create") {
     const resourceBody = event["ResourceProperties"]["resourceBody"];
     const res = await osRequest(url, "PUT", creds, resourceBody);
-    console.log(res.statusCode);
-    console.log(res.data);
     if (res.statusCode !== 200 && res.statusCode !== 201) {
       throw new Error("Failed to create resource");
     }
@@ -90,8 +96,6 @@ module.exports.handler = async (event) => {
   } else if (event["RequestType"] === "Update") {
     const resourceBody = event["ResourceProperties"]["resourceBody"];
     const res = await osRequest(url, "PUT", creds, resourceBody);
-    console.log(res.statusCode);
-    console.log(res.data);
     if (res.statusCode !== 200 && res.statusCode !== 201) {
       throw new Error("Failed to create resource");
     }
@@ -100,8 +104,6 @@ module.exports.handler = async (event) => {
     };
   } else if (event["RequestType"] === "Delete") {
     const res = await osRequest(url, "DELETE", creds);
-    console.log(res.statusCode);
-    console.log(res.data);
     if (res.statusCode !== 200) {
       throw new Error("Failed to delete resource");
     }
